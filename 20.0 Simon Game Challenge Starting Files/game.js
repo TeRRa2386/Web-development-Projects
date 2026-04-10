@@ -4,6 +4,8 @@ var userClickedPattern = [];
 
 var level = 0;
 
+var position = 0;
+
 var buttonColours = ["red", "blue", "green", "yellow"];
 
 function playSound(name) {
@@ -13,11 +15,9 @@ function playSound(name) {
 
 function animatePress(currentColour) {
   $("#" + currentColour).addClass("pressed");
-  console.log($("#" + currentColour));
   setTimeout(function () {
     $("#" + currentColour).removeClass("pressed");
   }, 100);
-  console.log($("#" + currentColour));
 }
 
 function nextSequence() {
@@ -28,20 +28,53 @@ function nextSequence() {
     .fadeOut(100)
     .fadeIn(100);
   playSound(randomChosenColour);
+  level++;
+  $('h1').text('Level ' + level)
+}
+
+function checkAnswer(userChosenColour) {
+  if (userClickedPattern.length > 0 && position < userClickedPattern.length){
+    if (userChosenColour === userClickedPattern[position]){
+      position++;
+      playSound(userChosenColour);
+    } else {
+      gameOver()
+    }
+  } else if (userChosenColour === gamePattern[gamePattern.length-1]){
+    userClickedPattern.push(userChosenColour);
+    position = 0;
+    playSound(userChosenColour);
+    setTimeout(function(){
+      nextSequence();
+    }, 600);
+  } else {
+    gameOver()
+  }
+}
+
+function gameOver() {
+  $('h1').text('Game Over, Press Any Key to Restart');
+  $('body').addClass('game-over');
+  playSound('wrong');
+  position = 0;
+  userClickedPattern = [];
+  gamePattern = []
+  level = 0;
+  $("h1").removeClass("started")
+  setTimeout(function(){
+    $('body').removeClass('game-over')
+  }, 200)
 }
 
 $(document).on("keypress", function () {
-  var condition = $("h1").hasClass("started");
-  if (!condition) {
+  if (! $("h1").hasClass("started")) {
+    $('h1').addClass('started')
     nextSequence();
-  } else {
   }
 });
 
 $(".btn").click(function () {
   var userChosenColour = $(this).attr("id");
-  userClickedPattern.push(userChosenColour);
   animatePress(userChosenColour);
-  playSound(userChosenColour);
-  console.log(userClickedPattern);
-});
+  checkAnswer(userChosenColour);
+})
