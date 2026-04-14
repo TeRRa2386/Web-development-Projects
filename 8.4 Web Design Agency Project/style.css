@@ -1,0 +1,58 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 50px 50px 0 50px;
+  background-color: #faf9f6;
+  display: flex;
+  flex-direction: column;
+  min-height: 95vh;
+}
+.main {
+  flex: 1;
+}
+
+h1 {
+  font-size: 3.5rem;
+  text-align: center;
+}
+footer {
+  text-align: right;
+  color: midnightblue;
+  clear: both;
+}
+
+span{
+  color: midnightblue;
+}
+
+.card img{
+  width: 100%;
+}
+
+.car-text{
+  text-align: justify;
+}
+
+@media (min-width: 681px){
+  h1{
+    font-size: 5rem;
+    text-align: left;
+  }
+  .card{
+    width: 45%;
+  }
+  .left{
+    float: left;
+  }
+  .right{
+    float: right;
+  }
+  .card > img{
+    width: 200px;
+    margin-right: 50px;
+    float: left;
+  }
+  .car-text{
+    text-align: left;
+  }
+}
+

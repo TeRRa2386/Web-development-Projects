@@ -27,6 +27,14 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello</h1>");
 });
 
+app.get('/about', (req, res) => {
+  res.send('<h1>About Me!</h1></br><p>Me encantan los gatitos y demas</p>')
+})
+
+app.get('/contact', (req, res) => {
+  res.send('<h1>Contact Me!</h1></br><h3>Phone Number: 856-622-8555</h3>')
+})
+
 app.listen(port, () => {
   console.log("Server running");
 });
