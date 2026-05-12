@@ -7,7 +7,22 @@ import axios from 'axios'
 const app = express();
 const port = 3000;
 
+app.use(express.static("public"));
+
 // 3. Use the public folder for static files.
+
+app.get('/', async (req, res) => {
+
+    try{
+    const response = await axios.get(`https://secrets-api.appbrewery.com/random`);
+    res.render("index.ejs", { secret: response.data });
+  } catch(error) {
+    console.error("Failed to make request:", error.message);
+    res.render("index.ejs", {
+      content: error.message,
+    });
+  }
+})
 
 // 4. When the user goes to the home page it should render the index.ejs file.
 
@@ -15,3 +30,6 @@ const port = 3000;
 // secret and the username of the secret.
 
 // 6. Listen on your predefined port and start the server.
+app.listen(port, () =>{
+    console.log(`Server is running in port ${port}`)
+})
